@@ -1,0 +1,283 @@
+% Archivo compartido: no compilar directamente.
+% Use clase_1_estudiante.tex o clase_1_docente.tex como archivo raíz.
+\ifdefined\documentoSemanal
+\else
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{estilo_apuntes}
+\usetikzlibrary{arrows.meta,positioning,babel}
+
+\encabezado{Semana 1 · Clase 1}{Material de clase}
+\begin{document}
+\fi
+\tituloclase{Funciones: conceptos fundamentales}{Función, dominio, imagen y restricción}{Semana 1 · Clase 1 · 1 hora}
+
+\begin{objetivos}
+\begin{itemize}
+  \item Reconocer cuándo una relación define una función.
+  \item Distinguir dominio, codominio e imagen.
+  \item Interpretar la notación $f:A\to B$ y el valor $f(x)$.
+  \item Comprender la restricción de una función.
+\end{itemize}
+\end{objetivos}      
+
+\begin{resumen}
+Una función es una relación especial entre dos conjuntos: cada elemento del conjunto de partida debe estar relacionado con exactamente un elemento del conjunto de llegada. La función queda determinada por su dominio, su codominio y su regla de asignación.
+\end{resumen}
+
+\section*{Relaciones y funciones}
+
+Dados dos conjuntos $A$ y $B$, el producto cartesiano es
+\[
+A\times B=\{(x,y):x\in A,\ y\in B\}.
+\]
+Una relación de $A$ en $B$ es cualquier subconjunto de $A\times B$.
+
+\begin{definicion}[función]
+Una relación $f\subseteq A\times B$ es una función de $A$ en $B$ si:
+\begin{enumerate}
+  \item para todo $x\in A$ existe $y\in B$ tal que $(x,y)\in f$;
+  \item si $(x,y)\in f$ y $(x,z)\in f$, entonces $y=z$.
+\end{enumerate}
+Se escribe $f:A\to B$ y $(x,y)\in f$ se expresa como $f(x)=y$.
+\end{definicion}
+
+\begin{nota}
+En otras palabras, $f$ es una función de $A$ en $B$ si es una relación entre los
+elementos de $A$ y $B$ de modo que para cada elemento $x$ de $A$, hay un único
+elemento $y$ de $B$ que le corresponde a $x$ en esta relación; a ese elemento y
+se le llama imagen de $x$ respecto de $f$ y se le representa por $f(x)$.
+\end{nota}
+
+La primera condición garantiza que ninguna entrada queda sin imagen. La segunda garantiza que la imagen de cada entrada sea única. Entradas diferentes pueden compartir una misma salida.
+
+\begin{ejemplo}[función y contraejemplo]
+Determine si las siguientes relaciones 
+\[
+R=\{(1,2),(2,2),(3,5)\},\qquad
+S=\{(1,2),(1,4),(3,5)\}
+\]
+definen funciones desde sus conjuntos de primeras componentes hacia $\mathbb{R}$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+$R$ sí es función: cada entrada $1,2,3$ aparece asociada con una única salida. Que $1$ y $2$ compartan la salida $2$ no viola la definición. $S$ no es función porque la entrada $1$ posee dos salidas distintas.
+\end{solucion}
+\else\vspace{12mm}\fi
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.05cm,y=0.62cm,>=Stealth,every node/.style={font=\small}]
+  \draw[->,Gris] (-0.35,0) -- (4.15,0) node[right] {$x$};
+  \draw[->,Gris] (0,-0.45) -- (0,6.15) node[above] {$y$};
+  \foreach \x in {1,2,3}{
+    \draw[Gris] (\x,0.10)--(\x,-0.10) node[below] {\x};
+  }
+  \foreach \y in {1,2,3,4,5}{
+    \draw[Gris] (0.10,\y)--(-0.10,\y) node[left] {\y};
+  }
+  \draw[dashed,Azul!55] (1,0)--(1,2)--(0,2);
+  \draw[dashed,Azul!55] (2,0)--(2,2);
+  \draw[dashed,Azul!55] (3,0)--(3,5)--(0,5);
+  \fill[Azul] (1,2) circle (2.4pt) node[above left] {$(1,2)$};
+  \fill[Azul] (2,2) circle (2.4pt) node[above right] {$(2,2)$};
+  \fill[Azul] (3,5) circle (2.4pt) node[above right] {$(3,5)$};
+\end{tikzpicture}
+\caption{Gráfico de $R=\{(1,2),(2,2),(3,5)\}$. Cada valor de $x$ aparece con una única coordenada $y$, por lo que $R$ representa una función.}
+\label{fig:pares-ordenados-funcion}
+\end{figure}
+
+\begin{definicion}[dominio y codominio]
+En $f:A\to B$, el conjunto $A$ es el \textbf{dominio} y $B$ es el \textbf{codominio}.
+\end{definicion}
+
+\begin{definicion}[imagen o recorrido]
+La imagen de $f:A\to B$ es
+\[
+\operatorname{Im}(f)=\{f(x):x\in A\}\subseteq B.
+\]
+Contiene únicamente las salidas alcanzadas y no tiene que coincidir con el codominio.
+\end{definicion}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>=Stealth,thick,every node/.style={font=\small}]
+  \draw[Azul,fill=AzulClaro] (0,0) ellipse (1.25cm and 2.05cm);
+  \draw[Verde,fill=VerdeClaro] (5.2,0) ellipse (1.25cm and 2.05cm);
+  \node[Azul,font=\bfseries] at (0,2.35) {$A$ (dominio)};
+  \node[Verde,font=\bfseries] at (5.2,2.35) {$B$ (codominio)};
+  \node (x1) at (0,1.15) {$x_1$};
+  \node (x2) at (0,0) {$x_2$};
+  \node (x3) at (0,-1.15) {$x_3$};
+  \node (y1) at (5.2,1.15) {$y_1$};
+  \node (y2) at (5.2,0) {$y_2$};
+  \node (y3) at (5.2,-1.15) {$y_3$};
+  \draw[->,Azul] (x1) -- (y1);
+  \draw[->,Azul] (x2) -- (y1);
+  \draw[->,Azul] (x3) -- (y3);
+  \node[align=center,text=Gris,font=\footnotesize] at (2.6,-2.0)
+    {cada elemento de $A$ tiene\\exactamente una flecha de salida};
+\end{tikzpicture}
+\caption{Representación de una función $f:A\to B$. Dos entradas distintas pueden compartir una imagen; $y_2$ puede no pertenecer a $\operatorname{Im}(f)$.}
+\label{fig:diagrama-funcion}
+\end{figure}
+
+\begin{ejemplo}[dominio, codominio e imagen]
+Sea $f:\{-2,-1,0,1,2\}\to\mathbb{R}$, $f(x)=x^2$. Identifique su dominio, su codominio y su imagen.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+\[
+\operatorname{Dom}(f)=\{-2,-1,0,1,2\},\qquad B=\mathbb{R}.
+\]
+Las salidas obtenidas son $4,1,0,1,4$, por lo que $\operatorname{Im}(f)=\{0,1,4\}$.
+\end{solucion}
+\else\vspace{12mm}\fi
+
+\begin{definicion}[gráfica de $f$]
+El gráfico de una relación $f:A\to\mathbb{R}$ es
+\[
+G_f=\{(x,f(x)):x\in A\}.
+\]
+\end{definicion}
+\begin{proposicion}[de la línea vertical]
+\begin{itemize}
+\item Dada una función todas las líneas verticales que se puedan dibujar intersecan el gráfico de $f$ solo una vez. 
+\item Si cualquier línea vertical interseca al gráfico de una relación $f$ más de una vez, entonces esta relación $f$ no representa una función.
+\end{itemize}
+\end{proposicion}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>=Stealth,every node/.style={font=\footnotesize}]
+  % Panel A: gráfico de una función.
+  \begin{scope}[xshift=0cm,yshift=-1.25cm,x=0.72cm,y=0.62cm]
+    \draw[->,Gris] (-2.45,0)--(2.45,0) node[right] {$x$};
+    \draw[->,Gris] (0,-0.45)--(0,4.6) node[above] {$y$};
+    \draw[Azul,very thick,domain=-2.05:2.05,samples=80,smooth,variable=\x]
+      plot ({\x},{\x*\x});
+    \draw[Rojo,dashed,thick] (1,-0.25)--(1,4.35)
+      node[above,text=Rojo] {$x=1$};
+    \fill[Rojo] (1,1) circle (2.3pt);
+    \node[Azul,font=\bfseries] at (0,-1.0) {(a) Sí es función};
+    \node[align=center,text=Gris] at (0,-1.55)
+      {una sola intersección};
+  \end{scope}
+
+  % Panel B: relación que no es función de x.
+  \begin{scope}[xshift=5.6cm,x=0.72cm,y=0.62cm]
+    \draw[->,Gris] (-2.45,0)--(2.45,0) node[right] {$x$};
+    \draw[->,Gris] (0,-2.45)--(0,2.45) node[above] {$y$};
+    \draw[Azul,very thick] (0,0) circle (2);
+    \draw[Rojo,dashed,thick] (1,-2.35)--(1,2.35)
+      node[above,text=Rojo] {$x=1$};
+    \fill[Rojo] (1,{sqrt(3)}) circle (2.3pt);
+    \fill[Rojo] (1,{-sqrt(3)}) circle (2.3pt);
+    \node[Azul,font=\bfseries] at (0,-3.0) {(b) No es función};
+    \node[align=center,text=Gris] at (0,-3.55)
+      {dos intersecciones};
+  \end{scope}
+\end{tikzpicture}
+\caption{Criterio de la línea vertical. En (a), cualquier recta vertical corta el gráfico a lo sumo una vez. En (b), al menos una recta vertical corta la circunferencia dos veces.}
+\label{fig:criterio-linea-vertical}
+\end{figure}
+
+
+\begin{definicion}[restricción]
+Si $C\subseteq A$, la restricción de $f:A\to B$ a $C$ es
+\[
+f|_C:C\to B,\qquad f|_C(x)=f(x).
+\]
+La regla se conserva, pero se reduce el dominio y, posiblemente, la imagen.
+\end{definicion}
+
+
+\begin{ejemplo}[efecto de una restricción]
+Compare $q:\mathbb{R}\to\mathbb{R}$, $q(x)=x^2$, con $q|_{[0,\infty)}$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+La regla es la misma. Los dominios son $\mathbb{R}$ y $[0,\infty)$, respectivamente; ambas imágenes son $[0,\infty)$. En la restricción desaparecen los pares de entradas opuestas con una misma salida.
+\end{solucion}
+\else\vspace{12mm}\fi
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>=Stealth,every node/.style={font=\footnotesize}]
+  % Función sobre todo R.
+  \begin{scope}[xshift=0cm,x=0.72cm,y=0.58cm]
+    \draw[->,Gris] (-2.65,0)--(2.65,0) node[right] {$x$};
+    \draw[->,Gris] (0,-0.35)--(0,5.25) node[above] {$y$};
+    \foreach \x in {-2,-1,1,2}{
+      \draw[Gris] (\x,0.09)--(\x,-0.09) node[below] {\x};
+    }
+    \foreach \y in {1,4}{
+      \draw[Gris] (0.09,\y)--(-0.09,\y) node[left] {\y};
+    }
+    \draw[Azul,very thick,domain=-2.25:2.25,samples=80,smooth,variable=\x]
+      plot ({\x},{\x*\x});
+    \node[Azul,font=\bfseries] at (0,-1.0) {$q:\mathbb{R}\to\mathbb{R}$};
+    \node[Azul] at (0,-1.55) {$q(x)=x^2$};
+  \end{scope}
+
+  % Restricción a [0,infinito).
+  \begin{scope}[xshift=5.6cm,x=0.72cm,y=0.58cm]
+    \draw[->,Gris] (-0.55,0)--(2.65,0) node[right] {$x$};
+    \draw[->,Gris] (0,-0.35)--(0,5.25) node[above] {$y$};
+    \foreach \x in {1,2}{
+      \draw[Gris] (\x,0.09)--(\x,-0.09) node[below] {\x};
+    }
+    \foreach \y in {1,4}{
+      \draw[Gris] (0.09,\y)--(-0.09,\y) node[left] {\y};
+    }
+    \draw[Verde,very thick,domain=0:2.25,samples=60,smooth,variable=\x]
+      plot ({\x},{\x*\x});
+    \fill[Verde] (0,0) circle (2.2pt);
+    \node[Verde,font=\bfseries] at (1.0,-1.0) {$q|_{[0,\infty)}$};
+    \node[Verde] at (1.0,-1.55) {$q|_{[0,\infty)}(x)=x^2$};
+  \end{scope}
+\end{tikzpicture}
+\caption{La restricción conserva la regla $x^2$ y únicamente la rama correspondiente a $x\geq0$. Ambas funciones tienen imagen $[0,\infty)$, pero dominios diferentes.}
+\label{fig:restriccion-cuadratica}
+\end{figure}
+
+\begin{ejercicios}[para la clase]
+\begin{enumerate}
+  \item Determine cuáles relaciones definen una función:
+  \[
+  A=\{(-1,0),(0,1),(1,0)\},\quad
+  B=\{(-1,0),(-1,1),(1,2)\}.
+  \]
+  \item Sea $f:\mathbb{R}\to\mathbb{R}$, $f(x)=2x^2-x+3$. Calcule $f(0)$, $f(-2)$, $f(a)$ y $f(a+h)$.
+  \item Si $g:\{-2,-1,0,1,2\}\to\mathbb{Z}$, $g(x)=|x|-1$, encuentre su imagen.
+  \item Distinga dominio, codominio e imagen para $h:\mathbb{R}\to\mathbb{R}$, $h(x)=x^2+1$.
+  %\item Proponga una función con codominio $\mathbb{R}$ e imagen $[-1,1]$.
+  \item Explique por qué $x^2+y^2=4$ no define a $y$ como función de $x$ y obtenga dos restricciones que si sean funciones.
+  %\item Sea $p:\mathbb{R}\to\mathbb{R}$, $p(x)=x^2-4$. Identifique el dominio y la imagen de $p|_{[-1,3]}$.
+  \item Construya una función definida en $\{1,2,3,4\}$ cuya imagen tenga exactamente dos elementos.
+\end{enumerate}
+\end{ejercicios}
+
+\ifmostrarSoluciones
+\begin{solucion}[de los ejercicios]
+\begin{enumerate}
+  \item $A$ es función; $B$ no lo es porque $-1$ posee dos imágenes.
+  \item $f(0)=3$, $f(-2)=13$, $f(a)=2a^2-a+3$ y
+  \[
+  f(a+h)=2a^2+4ah+2h^2-a-h+3.
+  \]
+  \item $\operatorname{Im}(g)=\{-1,0,1\}$.
+  \item Dominio $\mathbb{R}$, codominio $\mathbb{R}$ e imagen $[1,\infty)$.
+  %\item Una posibilidad es $f(x)=\sin x$ con dominio y codominio $\mathbb{R}$.
+  \item $y=\pm\sqrt{4-x^2}$, $-2\leq x\leq2$, define los semicírculos superior e inferior.
+  %\item Dominio $[-1,3]$ e imagen $[-4,5]$.
+  \item Por ejemplo, $f(1)=f(2)=0$ y $f(3)=f(4)=1$.
+\end{enumerate}
+\end{solucion}
+\fi
+
+\fuentes{\textbf{Para ampliar:} J. Stewart, \emph{Cálculo de una variable: trascendentes tempranas}, §1.1, y G. Strang--E. Herman, \emph{Cálculo, volumen 1}, OpenStax, §1.1.}
+\ifdefined\documentoSemanal
+\else
+\end{document}
+\fi

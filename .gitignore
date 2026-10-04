@@ -1,0 +1,13 @@
+# Ignorar todos los archivos por defecto.
+*
+
+# Permitir recorrer las carpetas para encontrar archivos TeX.
+!*/
+
+# Conservar este archivo y todos los archivos LaTeX.
+!.gitignore
+!*.tex
+
+# Excluir completamente la carpeta de libros, incluso si contiene archivos TeX.
+libros/
+**/libros/

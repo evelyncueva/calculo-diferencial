@@ -1,0 +1,195 @@
+% Archivo compartido: no compilar directamente.
+\ifdefined\documentoSemanal
+\else
+\usepackage{tikz}
+\usepackage{estilo_apuntes}
+\usetikzlibrary{arrows.meta,babel}
+\encabezado{Semana 2 · Clase 1}{Material de clase}
+\begin{document}
+\fi
+
+\ifdefined\documentoSemanal
+\else
+\tituloclase{Inyectividad, sobreyectividad e inversa}{Criterios gráficos y algebraicos}{Semana 2 · Clase 1 · 1 hora}
+
+\begin{objetivos}
+\begin{itemize}
+  \item Distinguir funciones inyectivas, sobreyectivas y biyectivas.
+  \item Aplicar criterios gráficos y algebraicos para justificar estas propiedades.
+  \item Determinar cuándo existe una función inversa y calcular su regla.
+\end{itemize}
+\end{objetivos}
+
+\begin{resumen}
+Estas propiedades dependen de la función completa, no solamente de su fórmula: importan el dominio y el codominio. Una función posee inversa si y solo si es biyectiva.
+\end{resumen}
+\fi
+
+\section*{Correspondencia entre dominio y codominio}
+
+\begin{definicion}[inyectividad, sobreyectividad y biyectividad]
+Sea $f:A\to B$.
+\begin{enumerate}
+  \item $f$ es \textbf{inyectiva} si
+  \[
+  \forall x_1,x_2\in A,\qquad f(x_1)=f(x_2)\Longrightarrow x_1=x_2.
+  \]
+  Equivalentemente, elementos distintos del dominio tienen imágenes distintas.
+  \item $f$ es \textbf{sobreyectiva} sobre $B$ si
+  \[
+  \forall y\in B,\quad \exists x\in A\text{ tal que }f(x)=y,
+  \]
+  es decir, $\operatorname{Im}(f)=B$.
+  \item $f$ es \textbf{biyectiva} si es inyectiva y sobreyectiva.
+\end{enumerate}
+\end{definicion}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,every node/.style={font=\scriptsize}]
+  \draw[Azul,thick] (0,0) ellipse (0.65 and 1.15);
+  \draw[Azul,thick] (2.5,0) ellipse (0.65 and 1.15);
+  \node[above] at (0,1.15) {$A$}; \node[above] at (2.5,1.15) {$B$};
+  \foreach \y in {0.65,0,-0.65}{\fill[Azul] (0,\y) circle (1.5pt);}
+  \foreach \y in {0.75,0.25,-0.25,-0.75}{\fill[Verde] (2.5,\y) circle (1.5pt);}
+  \draw[Azul,->] (0.08,0.65)--(2.42,0.75);
+  \draw[Azul,->] (0.08,0)--(2.42,0.25);
+  \draw[Azul,->] (0.08,-0.65)--(2.42,-0.25);
+  \node at (1.25,-1.35) {inyectiva, no sobreyectiva};
+
+  \begin{scope}[xshift=5.4cm]
+    \draw[Azul,thick] (0,0) ellipse (0.65 and 1.15);
+    \draw[Azul,thick] (2.5,0) ellipse (0.65 and 1.15);
+    \node[above] at (0,1.15) {$A$}; \node[above] at (2.5,1.15) {$B$};
+    \foreach \y in {0.75,0.25,-0.25,-0.75}{\fill[Azul] (0,\y) circle (1.5pt);}
+    \foreach \y in {0.65,0,-0.65}{\fill[Verde] (2.5,\y) circle (1.5pt);}
+    \draw[Azul,->] (0.08,0.75)--(2.42,0.65);
+    \draw[Azul,->] (0.08,0.25)--(2.42,0);
+    \draw[Azul,->] (0.08,-0.25)--(2.42,0);
+    \draw[Azul,->] (0.08,-0.75)--(2.42,-0.65);
+    \node at (1.25,-1.35) {sobreyectiva, no inyectiva};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{proposicion}[criterios gráficos]
+Sea $f:A\to B$ una función real representada gráficamente.
+\begin{enumerate}
+  \item $f$ es \textbf{inyectiva} si toda recta horizontal $y=c$ corta su gráfico a lo sumo una vez.
+  \item $f$ es \textbf{sobreyectiva} sobre $B$ si, para cada $c\in B$, la recta horizontal $y=c$ corta su gráfico al menos una vez.
+  \item $f$ es \textbf{biyectiva} si, para cada $c\in B$, la recta horizontal $y=c$ corta su gráfico exactamente una vez.
+\end{enumerate}
+\end{proposicion}
+
+\begin{center}
+\begin{tikzpicture}[x=1.05cm,y=1.05cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.25,0)--(1.25,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.2)--(0,1.3) node[above] {$y$};
+  \draw[Gris!70] (-1,0.035)--(-1,-0.035) node[below] {$-1$};
+  \draw[Gris!70] (1,0.035)--(1,-0.035) node[below] {$1$};
+  \draw[Gris!70] (-0.035,1)--(0.035,1) node[left] {$1$};
+  \node[below left] at (0,0) {$0$};
+  \draw[Azul,very thick,domain=-0.99:0.99,samples=60] plot (\x,{\x*\x});
+  \draw[Azul,fill=white,thick] (-1,1) circle (1.6pt) (1,1) circle (1.6pt);
+  \draw[Rojo,dashed] (-1.15,0.5)--(1.15,0.5) node[right] {$y=c$};
+  \fill[Rojo] (-0.707,0.5) circle (1.5pt) (0.707,0.5) circle (1.5pt);
+  \node[below=3pt,align=center,text width=4.1cm] at (0,-0.2)
+    {$f:(-1,1)\to[0,1)$, $f(x)=x^2$\\
+     $\operatorname{Dom}(f)=(-1,1)$\\
+     $\operatorname{Rec}(f)=[0,1)$\\
+     sobreyectiva, pero no biyectiva};
+\end{tikzpicture}
+\hspace{5mm}
+\begin{tikzpicture}[x=1.05cm,y=1.05cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.25,0)--(1.25,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.25)--(0,1.3) node[above] {$y$};
+  \draw[Gris!70] (-1,0.035)--(-1,-0.035) node[below] {$-1$};
+  \draw[Gris!70] (1,0.035)--(1,-0.035) node[below] {$1$};
+  \draw[Gris!70] (-0.035,-1)--(0.035,-1) node[left] {$-1$};
+  \draw[Gris!70] (-0.035,1)--(0.035,1) node[left] {$1$};
+  \node[below left] at (0,0) {$0$};
+  \draw[Azul,very thick] (-0.99,-0.99)--(0.99,0.99);
+  \draw[Azul,fill=white,thick] (-1,-1) circle (1.6pt) (1,1) circle (1.6pt);
+  \draw[Rojo,dashed] (-1.15,0.5)--(1.15,0.5) node[right] {$y=c$};
+  \fill[Rojo] (0.5,0.5) circle (1.5pt);
+  \node[below=3pt,align=center,text width=4.1cm] at (0,-1.25)
+    {$g:(-1,1)\to(-1,1)$, $g(x)=x$\\
+     $\operatorname{Dom}(g)=(-1,1)$\\
+     $\operatorname{Rec}(g)=(-1,1)$\\
+     inyectiva y sobreyectiva: biyectiva};
+\end{tikzpicture}
+\end{center}
+
+\section*{Función inversa}
+
+\begin{teorema}[existencia de la inversa]
+Una función $f:A\to B$ admite una función inversa $f^{-1}:B\to A$ si y solo si $f$ es biyectiva. En ese caso,
+\[
+f^{-1}(y)=x\iff f(x)=y,
+\]
+y se cumplen
+\[
+f^{-1}\circ f=\operatorname{id}_A,
+\qquad
+f\circ f^{-1}=\operatorname{id}_B.
+\]
+Además, $\operatorname{Dom}(f^{-1})=\operatorname{Im}(f)$ y $\operatorname{Im}(f^{-1})=\operatorname{Dom}(f)$.
+\end{teorema}
+
+\begin{nota}
+$f^{-1}(x)$ denota la función inversa y no el recíproco $1/f(x)$. Los gráficos de $f$ y $f^{-1}$ son simétricos respecto de la recta $y=x$.
+\end{nota}
+
+\begin{ejemplo}[inversa de una función afín]
+Demuestre que $f:\mathbb{R}\to\mathbb{R}$, $f(x)=2x-3$, es biyectiva y determine $f^{-1}$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Si $2x_1-3=2x_2-3$, entonces $x_1=x_2$; por tanto, $f$ es inyectiva. Para cada $y\in\mathbb{R}$, la ecuación $y=2x-3$ tiene la solución $x=(y+3)/2\in\mathbb{R}$, así que es sobreyectiva. Luego
+\[
+f^{-1}(x)=\frac{x+3}{2}.
+\]
+\end{solucion}
+\else\vspace{14mm}\fi
+
+\begin{ejemplo}[restricción para obtener una inversa]
+Explique por qué $q(x)=x^2$ no tiene inversa sobre $\mathbb{R}$ y proponga una restricción adecuada.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+No es inyectiva porque $q(x)=q(-x)$. Al restringirla a
+\[
+q:[0,\infty)\to[0,\infty),\qquad q(x)=x^2,
+\]
+se vuelve biyectiva y su inversa es $q^{-1}(x)=\sqrt{x}$.
+\end{solucion}
+\else\vspace{14mm}\fi
+
+\begin{ejercicios}[inyectividad e inversa]
+\begin{enumerate}
+  \item Determine si $f:\mathbb{R}\to\mathbb{R}$, $f(x)=3x+5$, es inyectiva, sobreyectiva o biyectiva.
+  \item Analice $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2+1$.
+  \item Analice $h:[0,\infty)\to[1,\infty)$, $h(x)=x^2+1$.
+  \item Determine si $p:\mathbb{R}\to(0,\infty)$, $p(x)=x^2+1$, es sobreyectiva.
+  \item Halle la inversa de $f(x)=(x-4)/3$ y verifique ambas composiciones.
+  \item Restrinja el dominio de $r(x)=(x-2)^2-1$ para obtener una función invertible y halle su inversa.
+\end{enumerate}
+\end{ejercicios}
+
+\ifmostrarSoluciones
+\begin{solucion}[de los ejercicios]
+\begin{enumerate}
+  \item Es biyectiva; $f^{-1}(x)=(x-5)/3$.
+  \item Su imagen es $[1,\infty)$. Con el codominio declarado $\mathbb{R}$ no es sobreyectiva; tampoco es inyectiva.
+  \item Es biyectiva y $h^{-1}(x)=\sqrt{x-1}$.
+  \item No: su imagen es $[1,\infty)$, que no coincide con $(0,\infty)$.
+  \item $f^{-1}(x)=3x+4$ y las dos composiciones producen $x$.
+  \item Por ejemplo, sobre $[2,\infty)$ con codominio $[-1,\infty)$; entonces $r^{-1}(x)=2+\sqrt{x+1}$.
+\end{enumerate}
+\end{solucion}
+\fi
+
+\ifdefined\documentoSemanal
+\else
+\fuentes{\textbf{Para ampliar:} J. Stewart, \emph{Cálculo de una variable: trascendentes tempranas}, §1.5; y G. Strang--E. Herman, \emph{Cálculo, volumen 1}, OpenStax, §1.4.}
+\end{document}
+\fi

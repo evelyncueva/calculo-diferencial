@@ -1,0 +1,26 @@
+% !TeX root = semana01.tex
+% !TeX program = pdflatex
+% Documento semanal: integra las clases 1 y 2.
+\documentclass[10pt,a5paper]{article}
+
+\newif\ifmostrarSoluciones
+% Cambie a \mostrarSolucionesfalse para generar una versión sin soluciones.
+\mostrarSolucionestrue
+
+\def\documentoSemanal{}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{estilo_apuntes}
+\usetikzlibrary{arrows.meta,positioning,babel}
+
+\encabezado{Semana 1}{Material semanal}
+
+\begin{document}
+
+\input{clase_1_contenido.tex}
+
+\clearpage
+
+\input{clase_2_contenido.tex}
+
+\end{document}
