@@ -1,7 +1,1015 @@
 % !TeX root = semana02.tex
 % !TeX program = pdflatex
-% Alias compatible de la versión semanal para el docente.
+% Versión única de la semana 02, con ejercicios y soluciones.
 \documentclass[10pt,a5paper]{article}
 \newif\ifmostrarSoluciones
 \mostrarSolucionestrue
-\input{semana_02_contenido.tex}
+% Material único de la semana 02.
+\usepackage{tikz}
+\usepackage{estilo_apuntes}
+\usetikzlibrary{arrows.meta,positioning,babel}
+\encabezado{Semana 2}{Apunte semanal}
+
+\begin{document}
+
+\tituloclase{Funciones y noción de límite}{Recuperación de contenidos y transición hacia el cálculo de límites}{Semana 2 · 5 horas}
+
+\begin{objetivos}
+\begin{itemize}
+  \item Transformar, operar y componer funciones, controlando sus dominios.
+  \item Analizar simetría, monotonía, inyectividad, sobreyectividad e inversas.
+  \item Interpretar límites mediante tablas, gráficas y sucesiones.
+  \item Calcular límites algebraicos mediante sustitución, factorización y racionalización.
+\end{itemize}
+\end{objetivos}
+
+
+\ifmostrarSoluciones
+\begin{docente}[: distribución sugerida]
+\begin{itemize}
+  \item Transformaciones, operaciones, composición y comportamiento: $75$ minutos.
+  \item Inyectividad, sobreyectividad, biyectividad e inversa: $45$ minutos.
+  \item Noción intuitiva de límite, laterales y sucesiones: $90$ minutos.
+  \item Álgebra y técnicas de cálculo de límites: $90$ minutos.
+\end{itemize}
+\end{docente}
+\fi
+
+\section*{Transformaciones de gráficos}
+
+\begin{proposicion}[de transformación]
+Sea $f:A\to\mathbb{R}$ y sean $h,k\in\mathbb{R}$ y $a,b\in\mathbb{R}\setminus\{0\}$. Para comparar los seis casos se utilizará como función base
+\[
+f:[0,2]\to[0,\sqrt2],\qquad f(x)=\sqrt{x}.
+\]
+En cada gráfica, el trazo gris discontinuo representa $f$ y el trazo azul representa la función transformada $g$.
+
+\begin{enumerate}
+\item \textbf{Traslación vertical.} La fórmula general es
+\[
+g(x)=f(x)+k.
+\]
+El gráfico se traslada $k$ unidades hacia arriba si $k>0$ y $|k|$ unidades hacia abajo si $k<0$. Para $k=1$:
+\begin{center}
+% Traslación vertical.
+\begin{tikzpicture}[x=0.72cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-0.25,0)--(2.55,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.15)--(0,2.75) node[above] {$y$};
+  \draw[Gris,dashed,thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)});
+  \draw[Azul,very thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)+1});
+\end{tikzpicture}
+\[
+g(x)=f(x)+1,\qquad
+\operatorname{Dom}(g)=[0,2],\qquad
+\operatorname{Rec}(g)=[1,1+\sqrt2].
+\]
+\end{center}
+
+\item \textbf{Traslación horizontal.} La fórmula general es
+\[
+g(x)=f(x-h).
+\]
+El gráfico se traslada $h$ unidades hacia la derecha si $h>0$ y $|h|$ unidades hacia la izquierda si $h<0$. Para $h=1$:
+\begin{center}
+% Traslación horizontal.
+\begin{tikzpicture}[x=0.72cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-0.25,0)--(3.45,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.15)--(0,1.8) node[above] {$y$};
+  \draw[Gris,dashed,thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)});
+  \draw[Azul,very thick,domain=1:3,samples=40] plot (\x,{sqrt(\x-1)});
+\end{tikzpicture}
+\[
+g(x)=f(x-1),\qquad
+\operatorname{Dom}(g)=[1,3],\qquad
+\operatorname{Rec}(g)=[0,\sqrt2].
+\]
+\end{center}
+
+\item \textbf{Reflexión respecto del eje $x$.} La fórmula es
+\[
+g(x)=-f(x).
+\]
+Cada punto $(x,y)$ del gráfico de $f$ se transforma en $(x,-y)$:
+\begin{center}
+% Reflexión respecto del eje x.
+\begin{tikzpicture}[x=0.72cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-0.25,0)--(2.55,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.75)--(0,1.75) node[above] {$y$};
+  \draw[Gris,dashed,thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)});
+  \draw[Azul,very thick,domain=0:2,samples=40] plot (\x,{-sqrt(\x)});
+\end{tikzpicture}
+\[
+g(x)=-f(x),\qquad
+\operatorname{Dom}(g)=[0,2],\qquad
+\operatorname{Rec}(g)=[-\sqrt2,0].
+\]
+\end{center}
+
+\item \textbf{Reflexión respecto del eje $y$.} La fórmula es
+\[
+g(x)=f(-x).
+\]
+Cada punto $(x,y)$ del gráfico de $f$ se transforma en $(-x,y)$:
+\begin{center}
+% Reflexión respecto del eje y.
+\begin{tikzpicture}[x=0.72cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-2.35,0)--(2.35,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.15)--(0,1.75) node[above] {$y$};
+  \draw[Gris,dashed,thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)});
+  \draw[Azul,very thick,domain=-2:0,samples=40] plot (\x,{sqrt(-\x)});
+\end{tikzpicture}
+\[
+g(x)=f(-x),\qquad
+\operatorname{Dom}(g)=[-2,0],\qquad
+\operatorname{Rec}(g)=[0,\sqrt2].
+\]
+\end{center}
+
+\item \textbf{Escala vertical.} La fórmula general es
+\[
+g(x)=a f(x),\qquad a\neq0.
+\]
+Las ordenadas se multiplican por $|a|$; si $a<0$, también hay una reflexión respecto del eje $x$. Para $a=2$:
+\begin{center}
+% Escala vertical.
+\begin{tikzpicture}[x=0.72cm,y=0.40cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-0.25,0)--(2.55,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.15)--(0,3.1) node[above] {$y$};
+  \draw[Gris,dashed,thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)});
+  \draw[Azul,very thick,domain=0:2,samples=40] plot (\x,{2*sqrt(\x)});
+\end{tikzpicture}
+\[
+g(x)=2f(x),\qquad
+\operatorname{Dom}(g)=[0,2],\qquad
+\operatorname{Rec}(g)=[0,2\sqrt2].
+\]
+\end{center}
+
+\item \textbf{Escala horizontal.} La fórmula general es
+\[
+g(x)=f(bx),\qquad b\neq0.
+\]
+Las abscisas se multiplican por $1/|b|$; si $b<0$, también hay una reflexión respecto del eje $y$. Para $b=2$:
+\begin{center}
+% Escala horizontal.
+\begin{tikzpicture}[x=0.72cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-0.25,0)--(2.55,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.15)--(0,1.75) node[above] {$y$};
+  \draw[Gris,dashed,thick,domain=0:2,samples=40] plot (\x,{sqrt(\x)});
+  \draw[Azul,very thick,domain=0:1,samples=40] plot (\x,{sqrt(2*\x)});
+\end{tikzpicture}
+\[
+g(x)=f(2x),\qquad
+\operatorname{Dom}(g)=[0,1],\qquad
+\operatorname{Rec}(g)=[0,\sqrt2].
+\]
+\end{center}
+\end{enumerate}
+
+Las transformaciones verticales conservan el dominio $A$. En cambio,
+\[
+\operatorname{Dom}(f(x-h))=\{x:x-h\in A\},\qquad
+\operatorname{Dom}(f(bx))=\{x:bx\in A\}.
+\]
+Por tanto, una transformación del argumento también transforma el dominio.
+\end{proposicion}
+
+\begin{ejemplo}[transformaciones]
+Determine el mayor conjunto $D\subseteq\mathbb{R}$ para que la relación $g(x)=-2\sqrt{x-3}+1$ defina una función real $g:D\to\mathbb{R}$. Describa su gráfico y determine su imagen.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Desde $y=\sqrt{x}$: trasladar $3$ unidades a la derecha, escalar verticalmente por $2$, reflejar respecto del eje $x$ y trasladar $1$ unidad hacia arriba. El punto inicial es $(3,1)$, el dominio es $[3,\infty)$ y la imagen es $(-\infty,1]$.
+\begin{center}
+% Gráfica de la solución del ejemplo de transformaciones.
+\begin{tikzpicture}[x=0.72cm,y=0.58cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (2.3,0)--(9,0) node[right] {$x$};
+  \draw[Gris!70] (3,-4.1)--(3,2) node[above] {$y$};
+  \draw[Gris,dashed] (3,0)--(3,1);
+  \draw[Azul,very thick,domain=3:8.5,samples=70]
+    plot (\x,{-2*sqrt(\x-3)+1});
+  \fill[Rojo] (3,1) circle (1.7pt);
+  \node[above right] at (3,1) {$(3,1)$};
+  \node[below left] at (3,0) {$3$};
+  \node[left] at (3,1) {$1$};
+  \node[below] at (6.5,-3.2) {$g(x)=-2\sqrt{x-3}+1$};
+\end{tikzpicture}
+\end{center}
+\end{solucion}
+\else\vspace{15mm}\fi
+
+\section*{Operaciones y composición}
+
+\begin{definicion}[operaciones]
+Sean $f:A\to\mathbb{R}$, $g:B\to\mathbb{R}$, $\lambda\in\mathbb{R}$ y $D=A\cap B$. Se definen las siguientes operaciones:
+\begin{enumerate}
+  \item \textbf{Producto por un escalar:}
+  \[
+  \lambda f:A\to\mathbb{R},\qquad
+  (\lambda f)(x)=\lambda f(x).
+  \]
+  \item \textbf{Suma:}
+  \[
+  f+g:D\to\mathbb{R},\qquad
+  (f+g)(x)=f(x)+g(x).
+  \]
+  \item \textbf{Diferencia:}
+  \[
+  f-g:D\to\mathbb{R},\qquad
+  (f-g)(x)=f(x)-g(x).
+  \]
+  \item \textbf{Producto:}
+  \[
+  fg:D\to\mathbb{R},\qquad
+  (fg)(x)=f(x)g(x).
+  \]
+  \item \textbf{Cociente:} si
+  \[
+  D_q=\{x\in A\cap B:g(x)\neq0\},
+  \]
+  entonces
+  \[
+  \frac{f}{g}:D_q\to\mathbb{R},\qquad
+  \left(\frac fg\right)(x)=\frac{f(x)}{g(x)}.
+  \]
+\end{enumerate}
+\end{definicion}
+
+\begin{definicion}[composición]
+Sean $A,B,C\subseteq\mathbb{R}$, $g:A\to\mathbb{R}$ y $f:B\to C$. El dominio de la composición de $f$ con $g$ es
+\[
+D=\{x\in A:g(x)\in B\}.
+\]
+La función compuesta es
+\[
+f\circ g:D\to C,\qquad (f\circ g)(x)=f(g(x)).
+\]
+Para que $f\circ g$ esté definida en todo $A$, debe cumplirse
+\[
+\operatorname{Im}(g)\subseteq B=\operatorname{Dom}(f).
+\]
+
+\begin{center}
+% Diagrama de la composición: primero actúa g y luego f.
+\begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\scriptsize}]
+  \fill[Azul!5] (0,0) ellipse (0.9 and 1.15);
+  \draw[Azul,thick] (0,0) ellipse (0.9 and 1.15);
+  \fill[Azul!5] (3.5,0) ellipse (1.15 and 1.35);
+  \draw[Azul,thick] (3.5,0) ellipse (1.15 and 1.35);
+  \fill[Verde!14] (3.5,0) ellipse (0.68 and 0.88);
+  \draw[Verde!75!black,thick,dashed] (3.5,0) ellipse (0.68 and 0.88);
+  \fill[Azul!5] (7,0) ellipse (0.9 and 1.15);
+  \draw[Azul,thick] (7,0) ellipse (0.9 and 1.15);
+
+  \node[above] at (0,1.15) {$A=\operatorname{Dom}(g)$};
+  \node[above] at (3.5,1.35) {$B=\operatorname{Dom}(f)$};
+  \node at (3.5,0.62) {$\operatorname{Im}(g)$};
+  \node[above] at (7,1.15) {$C$};
+
+  \fill[Rojo] (0,0) circle (1.5pt) node[below=2pt] {$x$};
+  \fill[Rojo] (3.5,-0.2) circle (1.5pt) node[below=2pt] {$g(x)$};
+  \fill[Rojo] (7,0.15) circle (1.5pt) node[below=2pt] {$f(g(x))$};
+
+  \draw[Azul,thick,->] (0.75,0.75) .. controls (1.45,1.32) and (2.15,1.42) ..
+    node[above] {$g$} (2.65,0.85);
+  \draw[Azul,thick,->] (4.35,0.85) .. controls (5.05,1.42) and (5.75,1.32) ..
+    node[above] {$f$} (6.25,0.75);
+  \draw[Verde!75!black,thick,->] (0.55,-0.92) .. controls (2.2,-2.05) and (4.8,-2.05) ..
+    node[below] {$f\circ g$} (6.45,-0.92);
+  \draw[Rojo,thin,->] (0.12,0.02) .. controls (1.2,-0.48) and (2.25,-0.48) .. (3.38,-0.22);
+  \draw[Rojo,thin,->] (3.62,-0.18) .. controls (4.75,-0.55) and (5.85,-0.45) .. (6.88,0.12);
+\end{tikzpicture}
+\end{center}
+El óvalo verde representa $\operatorname{Im}(g)$. Al estar contenido en $\operatorname{Dom}(f)$, cada salida de $g$ puede utilizarse como entrada de $f$.
+\end{definicion}
+
+En general, $g\circ f\neq f\circ g$: puede cambiar la regla, el dominio o ambos.
+
+\begin{ejemplo}[composición y dominio]
+Sean $f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^2+1$, y $g:[0,\infty)\to\mathbb{R}$, $g(x)=\sqrt{x}$. Calcule $g\circ f$ y $f\circ g$ e indique sus dominios.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Como $x^2+1\geq1$, se tiene
+\[
+(g\circ f)(x)=\sqrt{x^2+1},\qquad
+\operatorname{Dom}(g\circ f)=\mathbb{R}.
+\]
+En el otro orden, la función interior exige $x\geq0$:
+\[
+(f\circ g)(x)=(\sqrt{x})^2+1=x+1,\qquad
+\operatorname{Dom}(f\circ g)=[0,\infty).
+\]
+La simplificación de $(\sqrt{x})^2$ no elimina la restricción original $x\geq0$.
+\end{solucion}
+\else\vspace{15mm}\fi
+
+\section*{Simetría y monotonía de una función}
+
+\begin{definicion}[conjunto simétrico]
+Un conjunto $A\subseteq\mathbb{R}$ es \textbf{simétrico respecto de cero} si
+\[
+\forall x\in A,\qquad -x\in A.
+\]
+Esta condición garantiza que, junto con cada entrada $x$, también pueda evaluarse la entrada opuesta $-x$.
+\end{definicion}
+
+\begin{definicion}[función par e impar]
+Sea $f:A\to\mathbb{R}$, con $A$ simétrico respecto de cero.
+\begin{itemize}
+  \item $f$ es \textbf{par} si, para todo $x\in A$, $f(-x)=f(x)$. Su gráfico es simétrico respecto del eje $y$.
+  \item $f$ es \textbf{impar} si, para todo $x\in A$, $f(-x)=-f(x)$. Su gráfico es simétrico respecto del origen.
+\end{itemize}
+\end{definicion}
+
+\begin{ejemplo}[gráficas de funciones par e impar]
+La función $p(x)=x^2$ es par: los puntos correspondientes a $x$ y $-x$ tienen la misma ordenada. La función $q(x)=x^3$ es impar: los puntos correspondientes son simétricos respecto del origen.
+\begin{center}
+\setlength{\tabcolsep}{3mm}
+\begin{tabular}{cc}
+% Ejemplo de función par: simetría respecto del eje y.
+\begin{tikzpicture}[x=0.75cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.9,0)--(1.9,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.25)--(0,2.8) node[above] {$y$};
+  \draw[Azul,very thick,domain=-1.6:1.6,samples=60] plot (\x,{\x*\x});
+  \draw[Rojo,dashed] (-1,1)--(1,1);
+  \draw[Rojo,dashed] (-1,0)--(-1,1) (1,0)--(1,1);
+  \fill[Rojo] (-1,0) circle (1.2pt) (1,0) circle (1.2pt);
+  \fill[Rojo] (-1,1) circle (1.5pt) (1,1) circle (1.5pt);
+  \node[below] at (-1,0) {$-x$};
+  \node[below] at (1,0) {$x$};
+  \node[below=3pt] at (0,-0.72) {$p(x)=x^2$ (par)};
+\end{tikzpicture}
+&
+% Ejemplo de función impar: simetría respecto del origen.
+\begin{tikzpicture}[x=0.75cm,y=0.48cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.9,0)--(1.9,0) node[right] {$x$};
+  \draw[Gris!70] (0,-2.45)--(0,2.45) node[above] {$y$};
+  \draw[Azul,very thick,domain=-1.3:1.3,samples=60] plot (\x,{\x*\x*\x});
+  \draw[Rojo,dashed] (-1,-1)--(1,1);
+  \draw[Rojo,dashed] (-1,0)--(-1,-1) (1,0)--(1,1);
+  \fill[Rojo] (-1,0) circle (1.2pt) (1,0) circle (1.2pt);
+  \fill[Rojo] (-1,-1) circle (1.5pt) (1,1) circle (1.5pt);
+  \node[above] at (-1,0) {$-x$};
+  \node[below] at (1,0) {$x$};
+  \node[below=3pt] at (0,-2.45) {$q(x)=x^3$ (impar)};
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+En efecto, $p(-x)=(-x)^2=p(x)$, mientras que $q(-x)=(-x)^3=-q(x)$.
+\end{ejemplo}
+
+\begin{definicion}[monotonía de una función]
+Sea $f:A\to\mathbb{R}$ e $I\subseteq A$ un intervalo. Para todo $u,v\in I$:
+\begin{itemize}
+  \item $f$ es \textbf{creciente} en $I$ si $u\leq v$ implica $f(u)\leq f(v)$;
+  \item $f$ es \textbf{estrictamente creciente} en $I$ si $u<v$ implica $f(u)<f(v)$;
+  \item $f$ es \textbf{decreciente} en $I$ si $u\leq v$ implica $f(u)\geq f(v)$;
+  \item $f$ es \textbf{estrictamente decreciente} en $I$ si $u<v$ implica $f(u)>f(v)$.
+\end{itemize}
+Se dice que $f$ es \textbf{monótona} en $I$ si es creciente o decreciente en ese intervalo.
+
+\begin{center}
+\setlength{\tabcolsep}{3mm}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{cc}
+% Función creciente, con un tramo constante.
+\begin{tikzpicture}[x=0.78cm,y=0.52cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.9,0)--(1.9,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.25)--(0,1.45) node[above] {$y$};
+  \draw[Azul,very thick] (-1.65,-1)--(-0.8,0.15)--(0.8,0.15)--(1.65,1.2);
+  \draw[Rojo,dashed] (-1.2,0)--(-1.2,-0.39) (1.2,0)--(1.2,0.64);
+  \fill[Rojo] (-1.2,-0.39) circle (1.4pt) (1.2,0.64) circle (1.4pt);
+  \node[above] at (-1.2,0) {$u$};
+  \node[below] at (1.2,0) {$v$};
+  \node[left] at (-1.2,-0.39) {$f(u)$};
+  \node[right] at (1.2,0.64) {$f(v)$};
+  \node[below=2pt,align=center] at (0,-1.25) {creciente\\$u<v\Rightarrow f(u)\leq f(v)$};
+\end{tikzpicture}
+&
+% Función estrictamente creciente.
+\begin{tikzpicture}[x=0.78cm,y=0.52cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.9,0)--(1.9,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.25)--(0,1.45) node[above] {$y$};
+  \draw[Azul,very thick] (-1.65,-1.05)--(1.65,1.2);
+  \draw[Rojo,dashed] (-0.8,0)--(-0.8,-0.47) (0.8,0)--(0.8,0.62);
+  \fill[Rojo] (-0.8,-0.47) circle (1.4pt) (0.8,0.62) circle (1.4pt);
+  \node[above] at (-0.8,0) {$u$};
+  \node[below] at (0.8,0) {$v$};
+  \node[left] at (-0.8,-0.47) {$f(u)$};
+  \node[right] at (0.8,0.62) {$f(v)$};
+  \node[below=2pt,align=center] at (0,-1.25) {estrictamente creciente\\$u<v\Rightarrow f(u)<f(v)$};
+\end{tikzpicture}
+\\
+% Función decreciente, con un tramo constante.
+\begin{tikzpicture}[x=0.78cm,y=0.52cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.9,0)--(1.9,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.25)--(0,1.45) node[above] {$y$};
+  \draw[Azul,very thick] (-1.65,1.2)--(-0.8,0.15)--(0.8,0.15)--(1.65,-1);
+  \draw[Rojo,dashed] (-1.2,0)--(-1.2,0.64) (1.2,0)--(1.2,-0.39);
+  \fill[Rojo] (-1.2,0.64) circle (1.4pt) (1.2,-0.39) circle (1.4pt);
+  \node[below] at (-1.2,0) {$u$};
+  \node[above] at (1.2,0) {$v$};
+  \node[left] at (-1.2,0.64) {$f(u)$};
+  \node[right] at (1.2,-0.39) {$f(v)$};
+  \node[below=2pt,align=center] at (0,-1.25) {decreciente\\$u<v\Rightarrow f(u)\geq f(v)$};
+\end{tikzpicture}
+&
+% Función estrictamente decreciente.
+\begin{tikzpicture}[x=0.78cm,y=0.52cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.9,0)--(1.9,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.25)--(0,1.45) node[above] {$y$};
+  \draw[Azul,very thick] (-1.65,1.2)--(1.65,-1.05);
+  \draw[Rojo,dashed] (-0.8,0)--(-0.8,0.62) (0.8,0)--(0.8,-0.47);
+  \fill[Rojo] (-0.8,0.62) circle (1.4pt) (0.8,-0.47) circle (1.4pt);
+  \node[below] at (-0.8,0) {$u$};
+  \node[above] at (0.8,0) {$v$};
+  \node[left] at (-0.8,0.62) {$f(u)$};
+  \node[right] at (0.8,-0.47) {$f(v)$};
+  \node[below=2pt,align=center] at (0,-1.25) {estrictamente decreciente\\$u<v\Rightarrow f(u)>f(v)$};
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+Los tramos horizontales son compatibles con la monotonía no estricta, pero no con la monotonía estricta.
+\end{definicion}
+
+\begin{nota}
+Una función puede cambiar de comportamiento entre intervalos. Por ello, afirmar que es creciente o decreciente siempre debe acompañarse del intervalo donde se verifica la propiedad.
+\end{nota}
+
+\begin{ejemplo}[paridad y monotonía]
+Analice la paridad y la monotonía de $r(x)=|x|$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+El dominio $\mathbb{R}$ es simétrico y
+\[
+r(-x)=|-x|=|x|=r(x),
+\]
+por lo que $r$ es par. Además, es estrictamente decreciente en $(-\infty,0]$ y estrictamente creciente en $[0,\infty)$; no es monótona en todo $\mathbb{R}$.
+\end{solucion}
+\else\vspace{15mm}\fi
+
+\begin{ejercicios}[transformaciones, operaciones y comportamiento]
+\begin{enumerate}
+  \item Describa cómo obtener a partir de $f(x)=x^2$ las gráficas de $f_1(x)=(x-3)^2+2$ y $f_2(x)=-\tfrac12(x+1)^2+4$.
+  \item Determine el mayor conjunto $D\subseteq\mathbb{R}$ para que $g(x)=3\sqrt{2-x}-1$ defina una función real $g:D\to\mathbb{R}$; luego identifique sus transformaciones y su imagen.
+  \item Bosqueje $f(x)=|x+2|-3$ y halle sus intersecciones con los ejes.
+  %\item Si el gráfico de $f$ contiene $(2,-1)$, determine puntos correspondientes en $f(x-3)+4$, $-f(x)$ y $f(-x)$.
+  \item Sean $f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^2-1$, y $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x+2$. Calcule $3f$, $f+g$, $fg$ y $f/g$, e indique el dominio de cada función resultante.
+  \item Sean $f:[1,\infty)\to\mathbb{R}$, $f(x)=\sqrt{x-1}$, y $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2$. Halle ambas composiciones e indique sus dominios.
+  \item Descomponga como $g\circ f$:
+  \[
+  \sqrt{4-x^2},\qquad \frac{1}{(2x+3)^2},\qquad |x^3-1|.
+  \]
+  \item Clasifique como par, impar o ninguna: $x^6-2x^2$, $x^5-3x$, $x^2+x$ y $|x|+2$.
+  \item Indique intervalos de crecimiento y decrecimiento para $q(x)=|x-2|$.
+  \item Sea $f:\mathbb{R}\to\mathbb{R}$, $f(x)=2|x+1|-3$. Analice su imagen, sus intersecciones con los ejes, su monotonía y su simetría.
+\end{enumerate}
+\end{ejercicios}
+
+\ifmostrarSoluciones
+\begin{solucion}[de los ejercicios]
+\begin{enumerate}
+  \item $(x-3)^2+2$: trasladar $3$ a la derecha y $2$ arriba. Para $-\tfrac12(x+1)^2+4$: trasladar $1$ a la izquierda, comprimir verticalmente por $1/2$, reflejar en el eje $x$ y trasladar $4$ arriba.
+  \begin{center}
+  \setlength{\tabcolsep}{2mm}
+  \begin{tabular}{cc}
+  % Gráfica de la primera función del ejercicio 1.
+  \begin{tikzpicture}[x=0.55cm,y=0.34cm,every node/.style={font=\scriptsize}]
+    \draw[Gris!70] (0.3,0)--(5.8,0) node[right] {$x$};
+    \draw[Gris!70] (0.5,-0.3)--(0.5,7.1) node[above] {$y$};
+    \draw[Gris,dashed] (3,0)--(3,6.8);
+    \draw[Azul,very thick,domain=0.8:5.2,samples=60] plot (\x,{(\x-3)*(\x-3)+2});
+    \fill[Rojo] (3,2) circle (1.6pt);
+    \node[right] at (3,2) {$(3,2)$};
+    \node[below] at (3,0) {$3$};
+    \node[below=4pt,align=center] at (3,-0.3) {$f_1(x)=(x-3)^2+2$};
+  \end{tikzpicture}
+  &
+  % Gráfica de la segunda función del ejercicio 1.
+  \begin{tikzpicture}[x=0.55cm,y=0.42cm,every node/.style={font=\scriptsize}]
+    \draw[Gris!70] (-4.4,0)--(2.4,0) node[right] {$x$};
+    \draw[Gris!70] (0,-0.8)--(0,4.8) node[above] {$y$};
+    \draw[Gris,dashed] (-1,-0.6)--(-1,4.6);
+    \draw[Azul,very thick,domain=-4.1:2.1,samples=60] plot (\x,{-0.5*(\x+1)*(\x+1)+4});
+    \fill[Rojo] (-1,4) circle (1.6pt);
+    \node[right] at (-1,4) {$(-1,4)$};
+    \node[below] at (-1,0) {$-1$};
+    \node[below=4pt,align=center] at (-1,-0.8) {$f_2(x)=-\tfrac12(x+1)^2+4$};
+  \end{tikzpicture}
+  \end{tabular}
+  \end{center}
+  \item Dominio $(-\infty,2]$ e imagen $[-1,\infty)$.
+  \item Vértice $(-2,-3)$; ceros $x=-5,1$; intersección vertical $(0,-1)$.
+  %\item Los puntos son $(5,3)$, $(2,1)$ y $(-2,-1)$, respectivamente.
+  \item
+  \[
+  3f=3x^2-3,\qquad f+g=x^2+x+1,
+  \]
+  \[
+  fg=x^3+2x^2-x-2,
+  \]
+  todas con dominio $\mathbb{R}$, y $f/g=(x^2-1)/(x+2)$ con dominio $\mathbb{R}\setminus\{-2\}$.
+  \item
+  \[
+  (f\circ g)(x)=\sqrt{x^2-1},\quad \operatorname{Dom}=(-\infty,-1]\cup[1,\infty),
+  \]
+  \[
+  (g\circ f)(x)=x-1,\quad \operatorname{Dom}=[1,\infty).
+  \]
+  \item Use $f_1(x)=4-x^2$, $g_1(u)=\sqrt{u}$; $f_2(x)=2x+3$, $g_2(u)=1/u^2$; y $f_3(x)=x^3-1$, $g_3(u)=|u|$.
+  \item Par, impar, ninguna y par, respectivamente.
+  \item Decreciente en $(-\infty,2]$ y creciente en $[2,\infty)$.
+  \item Dominio $\mathbb{R}$, imagen $[-3,\infty)$, ceros $-5/2$ y $1/2$, e intersección vertical $(0,-1)$. Es decreciente hasta $-1$, creciente desde $-1$ y simétrica respecto de $x=-1$; no es par ni impar.
+\end{enumerate}
+\end{solucion}
+\fi
+\section*{Correspondencia entre dominio y codominio}
+
+\begin{definicion}[inyectividad, sobreyectividad y biyectividad]
+Sea $f:A\to B$.
+\begin{enumerate}
+  \item $f$ es \textbf{inyectiva} si
+  \[
+  \forall x_1,x_2\in A,\qquad f(x_1)=f(x_2)\Longrightarrow x_1=x_2.
+  \]
+  Equivalentemente, elementos distintos del dominio tienen imágenes distintas.
+  \item $f$ es \textbf{sobreyectiva} sobre $B$ si
+  \[
+  \forall y\in B,\quad \exists x\in A\text{ tal que }f(x)=y,
+  \]
+  es decir, $\operatorname{Im}(f)=B$.
+  \item $f$ es \textbf{biyectiva} si es inyectiva y sobreyectiva.
+\end{enumerate}
+\end{definicion}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,every node/.style={font=\scriptsize}]
+  \draw[Azul,thick] (0,0) ellipse (0.65 and 1.15);
+  \draw[Azul,thick] (2.5,0) ellipse (0.65 and 1.15);
+  \node[above] at (0,1.15) {$A$}; \node[above] at (2.5,1.15) {$B$};
+  \foreach \y in {0.65,0,-0.65}{\fill[Azul] (0,\y) circle (1.5pt);}
+  \foreach \y in {0.75,0.25,-0.25,-0.75}{\fill[Verde] (2.5,\y) circle (1.5pt);}
+  \draw[Azul,->] (0.08,0.65)--(2.42,0.75);
+  \draw[Azul,->] (0.08,0)--(2.42,0.25);
+  \draw[Azul,->] (0.08,-0.65)--(2.42,-0.25);
+  \node at (1.25,-1.35) {inyectiva, no sobreyectiva};
+
+  \begin{scope}[xshift=5.4cm]
+    \draw[Azul,thick] (0,0) ellipse (0.65 and 1.15);
+    \draw[Azul,thick] (2.5,0) ellipse (0.65 and 1.15);
+    \node[above] at (0,1.15) {$A$}; \node[above] at (2.5,1.15) {$B$};
+    \foreach \y in {0.75,0.25,-0.25,-0.75}{\fill[Azul] (0,\y) circle (1.5pt);}
+    \foreach \y in {0.65,0,-0.65}{\fill[Verde] (2.5,\y) circle (1.5pt);}
+    \draw[Azul,->] (0.08,0.75)--(2.42,0.65);
+    \draw[Azul,->] (0.08,0.25)--(2.42,0);
+    \draw[Azul,->] (0.08,-0.25)--(2.42,0);
+    \draw[Azul,->] (0.08,-0.75)--(2.42,-0.65);
+    \node at (1.25,-1.35) {sobreyectiva, no inyectiva};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{proposicion}[criterios gráficos]
+Sea $f:A\to B$ una función real representada gráficamente.
+\begin{enumerate}
+  \item $f$ es \textbf{inyectiva} si toda recta horizontal $y=c$ corta su gráfico a lo sumo una vez.
+  \item $f$ es \textbf{sobreyectiva} sobre $B$ si, para cada $c\in B$, la recta horizontal $y=c$ corta su gráfico al menos una vez.
+  \item $f$ es \textbf{biyectiva} si, para cada $c\in B$, la recta horizontal $y=c$ corta su gráfico exactamente una vez.
+\end{enumerate}
+\end{proposicion}
+
+\begin{center}
+\begin{tikzpicture}[x=1.05cm,y=1.05cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.25,0)--(1.25,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.2)--(0,1.3) node[above] {$y$};
+  \draw[Gris!70] (-1,0.035)--(-1,-0.035) node[below] {$-1$};
+  \draw[Gris!70] (1,0.035)--(1,-0.035) node[below] {$1$};
+  \draw[Gris!70] (-0.035,1)--(0.035,1) node[left] {$1$};
+  \node[below left] at (0,0) {$0$};
+  \draw[Azul,very thick,domain=-0.99:0.99,samples=60] plot (\x,{\x*\x});
+  \draw[Azul,fill=white,thick] (-1,1) circle (1.6pt) (1,1) circle (1.6pt);
+  \draw[Rojo,dashed] (-1.15,0.5)--(1.15,0.5) node[right] {$y=c$};
+  \fill[Rojo] (-0.707,0.5) circle (1.5pt) (0.707,0.5) circle (1.5pt);
+  \node[below=3pt,align=center,text width=4.1cm] at (0,-0.2)
+    {$f:(-1,1)\to[0,1)$, $f(x)=x^2$\\
+     $\operatorname{Dom}(f)=(-1,1)$\\
+     $\operatorname{Rec}(f)=[0,1)$\\
+     sobreyectiva, pero no biyectiva};
+\end{tikzpicture}
+\hspace{5mm}
+\begin{tikzpicture}[x=1.05cm,y=1.05cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-1.25,0)--(1.25,0) node[right] {$x$};
+  \draw[Gris!70] (0,-1.25)--(0,1.3) node[above] {$y$};
+  \draw[Gris!70] (-1,0.035)--(-1,-0.035) node[below] {$-1$};
+  \draw[Gris!70] (1,0.035)--(1,-0.035) node[below] {$1$};
+  \draw[Gris!70] (-0.035,-1)--(0.035,-1) node[left] {$-1$};
+  \draw[Gris!70] (-0.035,1)--(0.035,1) node[left] {$1$};
+  \node[below left] at (0,0) {$0$};
+  \draw[Azul,very thick] (-0.99,-0.99)--(0.99,0.99);
+  \draw[Azul,fill=white,thick] (-1,-1) circle (1.6pt) (1,1) circle (1.6pt);
+  \draw[Rojo,dashed] (-1.15,0.5)--(1.15,0.5) node[right] {$y=c$};
+  \fill[Rojo] (0.5,0.5) circle (1.5pt);
+  \node[below=3pt,align=center,text width=4.1cm] at (0,-1.25)
+    {$g:(-1,1)\to(-1,1)$, $g(x)=x$\\
+     $\operatorname{Dom}(g)=(-1,1)$\\
+     $\operatorname{Rec}(g)=(-1,1)$\\
+     inyectiva y sobreyectiva: biyectiva};
+\end{tikzpicture}
+\end{center}
+
+\section*{Función inversa}
+
+\begin{teorema}[existencia de la inversa]
+Una función $f:A\to B$ admite una función inversa $f^{-1}:B\to A$ si y solo si $f$ es biyectiva. En ese caso,
+\[
+f^{-1}(y)=x\iff f(x)=y,
+\]
+y se cumplen
+\[
+f^{-1}\circ f=\operatorname{id}_A,
+\qquad
+f\circ f^{-1}=\operatorname{id}_B.
+\]
+Además, $\operatorname{Dom}(f^{-1})=\operatorname{Im}(f)$ y $\operatorname{Im}(f^{-1})=\operatorname{Dom}(f)$.
+\end{teorema}
+
+\begin{nota}
+$f^{-1}(x)$ denota la función inversa y no el recíproco $1/f(x)$. Los gráficos de $f$ y $f^{-1}$ son simétricos respecto de la recta $y=x$.
+\end{nota}
+
+\begin{ejemplo}[inversa de una función afín]
+Demuestre que $f:\mathbb{R}\to\mathbb{R}$, $f(x)=2x-3$, es biyectiva y determine $f^{-1}$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Si $2x_1-3=2x_2-3$, entonces $x_1=x_2$; por tanto, $f$ es inyectiva. Para cada $y\in\mathbb{R}$, la ecuación $y=2x-3$ tiene la solución $x=(y+3)/2\in\mathbb{R}$, así que es sobreyectiva. Luego
+\[
+f^{-1}(x)=\frac{x+3}{2}.
+\]
+\end{solucion}
+\else\vspace{14mm}\fi
+
+\begin{ejemplo}[restricción para obtener una inversa]
+Explique por qué $q(x)=x^2$ no tiene inversa sobre $\mathbb{R}$ y proponga una restricción adecuada.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+No es inyectiva porque $q(x)=q(-x)$. Al restringirla a
+\[
+q:[0,\infty)\to[0,\infty),\qquad q(x)=x^2,
+\]
+se vuelve biyectiva y su inversa es $q^{-1}(x)=\sqrt{x}$.
+\end{solucion}
+\else\vspace{14mm}\fi
+
+\begin{ejercicios}[inyectividad e inversa]
+\begin{enumerate}
+  \item Determine si $f:\mathbb{R}\to\mathbb{R}$, $f(x)=3x+5$, es inyectiva, sobreyectiva o biyectiva.
+  \item Analice $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2+1$.
+  \item Analice $h:[0,\infty)\to[1,\infty)$, $h(x)=x^2+1$.
+  \item Determine si $p:\mathbb{R}\to(0,\infty)$, $p(x)=x^2+1$, es sobreyectiva.
+  \item Halle la inversa de $f(x)=(x-4)/3$ y verifique ambas composiciones.
+  \item Restrinja el dominio de $r(x)=(x-2)^2-1$ para obtener una función invertible y halle su inversa.
+\end{enumerate}
+\end{ejercicios}
+
+\ifmostrarSoluciones
+\begin{solucion}[de los ejercicios]
+\begin{enumerate}
+  \item Es biyectiva; $f^{-1}(x)=(x-5)/3$.
+  \item Su imagen es $[1,\infty)$. Con el codominio declarado $\mathbb{R}$ no es sobreyectiva; tampoco es inyectiva.
+  \item Es biyectiva y $h^{-1}(x)=\sqrt{x-1}$.
+  \item No: su imagen es $[1,\infty)$, que no coincide con $(0,\infty)$.
+  \item $f^{-1}(x)=3x+4$ y las dos composiciones producen $x$.
+  \item Por ejemplo, sobre $[2,\infty)$ con codominio $[-1,\infty)$; entonces $r^{-1}(x)=2+\sqrt{x+1}$.
+\end{enumerate}
+\end{solucion}
+\fi
+\section*{Aproximación a un punto}
+
+\begin{definicion}[noción intuitiva de límite]
+Escribimos
+\[
+\lim_{x\to a}f(x)=L
+\]
+cuando los valores $f(x)$ pueden hacerse tan próximos a $L$ como se desee al tomar $x$ suficientemente próximo a $a$, con $x\neq a$. El límite estudia valores en un entorno perforado de $a$.
+\end{definicion}
+
+\begin{nota}
+La expresión $x\to a$ no significa que $x$ llegue a ser igual a $a$. Las afirmaciones $\lim_{x\to a}f(x)=L$ y $f(a)=L$ son diferentes y ninguna implica por sí sola la otra.
+\end{nota}
+
+\begin{ejemplo}[exploración mediante una tabla]
+Para $x\neq1$, considere
+\[
+f(x)=\frac{x^2-1}{x-1}.
+\]
+Complete o verifique la tabla y conjeture el límite cuando $x\to1$.
+\[
+\begin{array}{c|cccccc}
+x&0.9&0.99&0.999&1.001&1.01&1.1\\ \hline
+f(x)&1.9&1.99&1.999&2.001&2.01&2.1
+\end{array}
+\]
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Los valores se aproximan a $2$ desde ambos lados. Como $x^2-1=(x-1)(x+1)$,
+\[
+f(x)=x+1\quad(x\neq1),
+\]
+y la evidencia sugiere $\lim_{x\to1}f(x)=2$, aunque $f(1)$ no está definida.
+\end{solucion}
+\else\vspace{12mm}\fi
+
+\begin{center}
+\begin{tikzpicture}[x=1.05cm,y=0.8cm,every node/.style={font=\scriptsize}]
+  \draw[Gris!70] (-0.4,0)--(3.1,0) node[right] {$x$};
+  \draw[Gris!70] (0,-0.3)--(0,3.4) node[above] {$y$};
+  \draw[Azul,very thick,domain=-0.1:2.8,samples=2] plot (\x,{\x+1});
+  \draw[fill=white,draw=Rojo,thick] (1,2) circle (2.2pt);
+  \fill[Rojo] (1,3) circle (1.8pt);
+  \draw[Gris,dashed] (1,0)--(1,3);
+  \node[below] at (1,0) {$a$};
+  \node[left] at (0,2) {$L$};
+  \node[right] at (1,2) {valor al que se aproxima};
+  \node[right] at (1,3) {$f(a)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{definicion}[límites laterales]
+El \textbf{límite por la izquierda}, $\lim_{x\to a^-}f(x)$, utiliza valores $x<a$. El \textbf{límite por la derecha}, $\lim_{x\to a^+}f(x)$, utiliza valores $x>a$.
+\end{definicion}
+
+\begin{teorema}[criterio de los límites laterales]
+El límite bilateral existe y vale $L$ si y solo si existen los dos límites laterales y coinciden:
+\[
+\lim_{x\to a}f(x)=L
+\iff
+\lim_{x\to a^-}f(x)=L=\lim_{x\to a^+}f(x).
+\]
+Si los límites laterales son distintos, el límite bilateral no existe.
+\end{teorema}
+
+\begin{ejemplo}[salto]
+Sea $s(x)=-1$ para $x<0$ y $s(x)=2$ para $x\geq0$. Determine sus límites laterales y decida si existe $\lim_{x\to0}s(x)$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+\[
+\lim_{x\to0^-}s(x)=-1,\qquad
+\lim_{x\to0^+}s(x)=2.
+\]
+Como son distintos, $\lim_{x\to0}s(x)$ no existe, aunque $s(0)=2$ sí está definido.
+\end{solucion}
+\else\vspace{13mm}\fi
+
+\section*{Interpretación mediante sucesiones}
+
+\begin{proposicion}[criterio secuencial intuitivo]
+La afirmación $\lim_{x\to a}f(x)=L$ exige que, para toda sucesión $(x_n)$ del dominio tal que
+\[
+x_n\neq a\quad\text{y}\quad x_n\to a,
+\]
+se tenga $f(x_n)\to L$. Para refutar la existencia del límite basta encontrar dos sucesiones que se aproximen a $a$ y cuyas imágenes tengan límites diferentes.
+\end{proposicion}
+
+\begin{ejemplo}[dos caminos hacia el mismo punto]
+Use $x_n=1/n$ y $y_n=-1/n$ para estudiar el límite en $0$ de la función signo, definida como $1$ para entradas positivas y $-1$ para entradas negativas.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Ambas sucesiones tienden a $0$, pero $\operatorname{sgn}(x_n)=1$ y $\operatorname{sgn}(y_n)=-1$ para todo $n$. Las imágenes tienen límites distintos; por tanto, el límite en $0$ no existe.
+\end{solucion}
+\else\vspace{13mm}\fi
+
+\section*{Unicidad y comportamiento local}
+
+\begin{teorema}[unicidad del límite]
+Si $\lim_{x\to a}f(x)$ existe, su valor es único. En consecuencia, una misma función no puede aproximarse simultáneamente a dos números distintos cuando $x\to a$.
+\end{teorema}
+
+\begin{definicion}[funciones localmente iguales]
+Las funciones $f$ y $g$ son \textbf{localmente iguales alrededor de $a$} si existe un intervalo abierto $I$ que contiene a $a$ tal que
+\[
+f(x)=g(x)\qquad\text{para todo }x\in I\setminus\{a\}.
+\]
+Pueden diferir en $a$ o fuera de ese intervalo.
+\end{definicion}
+
+\begin{proposicion}[principio de sustitución local]
+Si $f$ y $g$ son localmente iguales alrededor de $a$, entonces
+\[
+\lim_{x\to a}f(x)=L\iff\lim_{x\to a}g(x)=L.
+\]
+El límite depende del comportamiento próximo al punto, no del valor asignado exactamente en él ni de lo que ocurra lejos de él.
+\end{proposicion}
+
+\begin{ejemplo}[cambio en un solo punto]
+Considere $g(x)=x+1$ y defina $f(x)=x+1$ cuando $x\neq1$, pero $f(1)=7$. Compare $f(1)$, $g(1)$ y los límites de ambas funciones cuando $x\to1$.
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+$f(1)=7$ y $g(1)=2$, pero las funciones coinciden para todo $x\neq1$. Por el principio de sustitución local,
+\[
+\lim_{x\to1}f(x)=\lim_{x\to1}g(x)=2.
+\]
+\end{solucion}
+\else\vspace{12mm}\fi
+
+\begin{ejercicios}[noción intuitiva de límite]
+\begin{enumerate}
+  \item Construya una tabla para estimar $\lim_{x\to2}(x^2+1)$.
+  \item Estime $\lim_{x\to3}\dfrac{x^2-9}{x-3}$ con tres valores a cada lado de $3$.
+  \item Dibuje una función con $f(2)=4$ y $\lim_{x\to2}f(x)=1$.
+  \item Decida si existe el límite en $0$ de $f(x)=|x|/x$.
+  \item Use dos sucesiones para justificar su respuesta en el ejercicio anterior.
+  \item Proponga dos funciones localmente iguales alrededor de $2$ que tengan valores diferentes en $2$.
+  \item ¿Puede una función tener límite $3$ y límite $5$ en el mismo punto? Justifique.
+\end{enumerate}
+\end{ejercicios}
+
+\ifmostrarSoluciones
+\begin{solucion}[de los ejercicios]
+\begin{enumerate}
+  \item Los valores se aproximan a $5$.
+  \item Para $x\neq3$, el cociente es $x+3$; la tabla se aproxima a $6$.
+  \item Por ejemplo, $f(x)=1$ si $x\neq2$ y $f(2)=4$.
+  \item No existe: los límites laterales son $-1$ y $1$.
+  \item Con $x_n=1/n$ y $y_n=-1/n$, las imágenes son $1$ y $-1$, respectivamente.
+  \item Por ejemplo, $f(x)=x^2$ y $g(x)=x^2$ para $x\neq2$, con $g(2)=0$.
+  \item No, por la unicidad del límite.
+\end{enumerate}
+\end{solucion}
+\fi
+\section*{Límites básicos}
+
+\begin{proposicion}[límites fundamentales]
+Sean $a,c\in\mathbb{R}$ y $n\in\mathbb{N}^{*}$. Entonces
+\[
+\lim_{x\to a}c=c,\qquad
+\lim_{x\to a}x=a,\qquad
+\lim_{x\to a}x^n=a^n.
+\]
+Cuando la raíz está definida en un entorno adecuado de $a$,
+\[
+\lim_{x\to a}\sqrt[n]{x}=\sqrt[n]{a}.
+\]
+Para $n$ par y $a=0$, esta última afirmación se interpreta como límite por la derecha.
+\end{proposicion}
+
+\begin{teorema}[álgebra de límites]
+Suponga que $\lim_{x\to a}f(x)=L$, $\lim_{x\to a}g(x)=M$ y $\lambda\in\mathbb{R}$. Entonces:
+\begin{align*}
+\lim_{x\to a}(f(x)+g(x))&=L+M,\\
+\lim_{x\to a}(f(x)-g(x))&=L-M,\\
+\lim_{x\to a}\lambda f(x)&=\lambda L,\\
+\lim_{x\to a}f(x)g(x)&=LM.
+\end{align*}
+Si $M\neq0$, también
+\[
+\lim_{x\to a}\frac{f(x)}{g(x)}=\frac{L}{M}.
+\]
+Además, las potencias enteras positivas y las raíces compatibles con su dominio pueden trasladarse al límite.
+\end{teorema}
+
+\begin{nota}
+La condición $M\neq0$ en la regla del cociente es indispensable. Una forma $0/0$ es \textbf{indeterminada}: distintos cocientes pueden presentar esa forma y tener límites diferentes o no tener límite.
+\end{nota}
+
+\section*{Sustitución directa}
+
+\begin{proposicion}[funciones algebraicas]
+Sea $a\in\mathbb{R}$.
+\begin{enumerate}
+  \item Si $p$ es un polinomio, entonces $\lim_{x\to a}p(x)=p(a)$.
+  \item Si $r=p/q$ es racional y $q(a)\neq0$, entonces $\lim_{x\to a}r(x)=r(a)$.
+  \item Para expresiones radicales, la sustitución es válida cuando $a$ y los valores próximos considerados pertenecen al dominio de la raíz.
+\end{enumerate}
+\end{proposicion}
+
+\begin{ejemplo}[sustitución directa]
+Calcule
+\[
+\lim_{x\to-2}(3x^3-x+4),\qquad
+\lim_{x\to1}\frac{x^2+2}{x+3},\qquad
+\lim_{x\to5}\sqrt{x+4}.
+\]
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Los denominadores y radicales son admisibles en los puntos indicados. Por sustitución,
+\[
+-18,\qquad \frac34,\qquad 3,
+\]
+respectivamente.
+\end{solucion}
+\else\vspace{15mm}\fi
+
+\section*{Indeterminaciones algebraicas}
+
+\begin{proposicion}[estrategia de simplificación local]
+Si la sustitución produce $0/0$:
+\begin{enumerate}
+  \item factorice numerador y denominador o racionalice la expresión;
+  \item simplifique solamente para $x\neq a$;
+  \item calcule el límite de la expresión simplificada;
+  \item conserve las restricciones del problema original.
+\end{enumerate}
+La justificación es que ambas expresiones son localmente iguales alrededor de $a$.
+\end{proposicion}
+
+\begin{ejemplo}[factorización]
+Calcule
+\[
+\lim_{x\to3}\frac{x^2-9}{x-3}.
+\]
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+La sustitución produce $0/0$. Para $x\neq3$,
+\[
+\frac{x^2-9}{x-3}=\frac{(x-3)(x+3)}{x-3}=x+3.
+\]
+Las funciones son localmente iguales alrededor de $3$; por tanto, el límite es $6$.
+\end{solucion}
+\else\vspace{16mm}\fi
+
+\begin{ejemplo}[racionalización del numerador]
+Calcule
+\[
+\lim_{x\to0}\frac{\sqrt{x+4}-2}{x}.
+\]
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Se multiplica por el conjugado:
+\begin{align*}
+\frac{\sqrt{x+4}-2}{x}
+&=\frac{(\sqrt{x+4}-2)(\sqrt{x+4}+2)}{x(\sqrt{x+4}+2)}\\
+&=\frac{1}{\sqrt{x+4}+2},\qquad x\neq0.
+\end{align*}
+En consecuencia, el límite es $1/4$.
+\end{solucion}
+\else\vspace{18mm}\fi
+
+\begin{ejemplo}[racionalización del denominador]
+Calcule
+\[
+\lim_{x\to4}\frac{x-4}{\sqrt{x}-2}.
+\]
+\end{ejemplo}
+\ifmostrarSoluciones
+\begin{solucion}
+Para $x\neq4$,
+\[
+\frac{x-4}{\sqrt{x}-2}
+=\frac{(\sqrt{x}-2)(\sqrt{x}+2)}{\sqrt{x}-2}
+=\sqrt{x}+2.
+\]
+Luego el límite es $4$.
+\end{solucion}
+\else\vspace{15mm}\fi
+
+\begin{nota}
+No debe cancelarse un sumando. Solo pueden cancelarse factores no nulos. Por ejemplo, en $(x^2-9)/(x-3)$ se factoriza primero y se cancela el factor $x-3$ bajo la condición $x\neq3$.
+\end{nota}
+
+\begin{ejercicios}[álgebra y cálculo de límites]
+Calcule los siguientes límites e indique la técnica principal.
+\begin{enumerate}
+  \item $\displaystyle\lim_{x\to2}(4x^3-3x+1)$.
+  \item $\displaystyle\lim_{x\to-1}\frac{x^2+3x+5}{x^2+4}$.
+  \item $\displaystyle\lim_{x\to4}\sqrt{2x+1}$.
+  \item $\displaystyle\lim_{x\to2}\frac{x^2-4}{x-2}$.
+  \item $\displaystyle\lim_{x\to-3}\frac{x^2+5x+6}{x+3}$.
+  \item $\displaystyle\lim_{x\to1}\frac{x^3-1}{x-1}$.
+  \item $\displaystyle\lim_{x\to0}\frac{\sqrt{1+x}-1}{x}$.
+  \item $\displaystyle\lim_{x\to5}\frac{x-5}{\sqrt{x-1}-2}$.
+  \item $\displaystyle\lim_{x\to2}\frac{\sqrt{x+2}-2}{x-2}$.
+  \item $\displaystyle\lim_{x\to0^+}\sqrt{x}$.
+\end{enumerate}
+\end{ejercicios}
+
+\ifmostrarSoluciones
+\begin{solucion}[de los ejercicios]
+\begin{enumerate}
+  \item $27$, por sustitución directa.
+  \item $3/5$, por sustitución directa.
+  \item $3$, por sustitución directa.
+  \item $4$, pues $(x^2-4)/(x-2)=x+2$ para $x\neq2$.
+  \item $-1$, pues $(x+2)(x+3)/(x+3)=x+2$ para $x\neq-3$.
+  \item $3$, usando $x^3-1=(x-1)(x^2+x+1)$.
+  \item $1/2$, al racionalizar el numerador.
+  \item $4$, porque el cociente se simplifica a $\sqrt{x-1}+2$.
+  \item $1/4$, al racionalizar el numerador.
+  \item $0$; solo se considera la aproximación por la derecha.
+\end{enumerate}
+\end{solucion}
+\fi
+
+\fuentes{\textbf{Para ampliar:} \emph{Cálculo en una variable: notas de clase 2018-B}, apartados de funciones y límites; J. Stewart, \emph{Cálculo de una variable: trascendentes tempranas}, §§1.3, 1.5 y 2.2--2.3; y G. Strang--E. Herman, \emph{Cálculo, volumen 1}, OpenStax, §§1.1--1.4 y 2.2--2.3.}
+
+\end{document}
