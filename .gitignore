@@ -4,9 +4,11 @@
 # Permitir recorrer las carpetas para encontrar archivos TeX.
 !*/
 
-# Conservar este archivo y todos los archivos LaTeX.
+# Conservar este archivo, las fuentes LaTeX, sus estilos y los PDF generados.
 !.gitignore
 !*.tex
+!*.sty
+!*.pdf
 
 # Excluir completamente la carpeta de libros, incluso si contiene archivos TeX.
 libros/
