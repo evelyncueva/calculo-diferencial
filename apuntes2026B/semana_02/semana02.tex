@@ -18,7 +18,7 @@
 \begin{itemize}
   \item Transformar, operar y componer funciones, controlando sus dominios.
   \item Analizar simetría, monotonía, inyectividad, sobreyectividad e inversas.
-  \item Interpretar límites mediante tablas, gráficas y sucesiones.
+  \item Interpretar límites mediante tablas, gráficas y el comportamiento de funciones.
   \item Calcular límites algebraicos mediante sustitución, factorización y racionalización.
 \end{itemize}
 \end{objetivos}
@@ -583,8 +583,6 @@ Sea $f:A\to B$ una función real representada gráficamente.
   \fill[Rojo] (-0.707,0.5) circle (1.5pt) (0.707,0.5) circle (1.5pt);
   \node[below=3pt,align=center,text width=4.1cm] at (0,-0.2)
     {$f:(-1,1)\to[0,1)$, $f(x)=x^2$\\
-     $\operatorname{Dom}(f)=(-1,1)$\\
-     $\operatorname{Rec}(f)=[0,1)$\\
      sobreyectiva, pero no biyectiva};
 \end{tikzpicture}
 \hspace{5mm}
@@ -602,8 +600,6 @@ Sea $f:A\to B$ una función real representada gráficamente.
   \fill[Rojo] (0.5,0.5) circle (1.5pt);
   \node[below=3pt,align=center,text width=4.1cm] at (0,-1.25)
     {$g:(-1,1)\to(-1,1)$, $g(x)=x$\\
-     $\operatorname{Dom}(g)=(-1,1)$\\
-     $\operatorname{Rec}(g)=(-1,1)$\\
      inyectiva y sobreyectiva: biyectiva};
 \end{tikzpicture}
 \end{center}
@@ -656,8 +652,8 @@ se vuelve biyectiva y su inversa es $q^{-1}(x)=\sqrt{x}$.
 \begin{ejercicios}[inyectividad e inversa]
 \begin{enumerate}
   \item Determine si $f:\mathbb{R}\to\mathbb{R}$, $f(x)=3x+5$, es inyectiva, sobreyectiva o biyectiva.
-  \item Analice $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2+1$.
-  \item Analice $h:[0,\infty)\to[1,\infty)$, $h(x)=x^2+1$.
+  \item Para $g:\mathbb{R}\to\mathbb{R}$, $g(x)=x^2+1$, determine su imagen y decida si la función es inyectiva, sobreyectiva o biyectiva. Justifique cada conclusión.
+  \item Para $h:[0,\infty)\to[1,\infty)$, $h(x)=x^2+1$, determine si la función es inyectiva y si es sobreyectiva. Concluya si es biyectiva y, en caso afirmativo, halle su inversa.
   \item Determine si $p:\mathbb{R}\to(0,\infty)$, $p(x)=x^2+1$, es sobreyectiva.
   \item Halle la inversa de $f(x)=(x-4)/3$ y verifique ambas composiciones.
   \item Restrinja el dominio de $r(x)=(x-2)^2-1$ para obtener una función invertible y halle su inversa.
@@ -683,7 +679,7 @@ Escribimos
 \[
 \lim_{x\to a}f(x)=L
 \]
-cuando los valores $f(x)$ pueden hacerse tan próximos a $L$ como se desee al tomar $x$ suficientemente próximo a $a$, con $x\neq a$. El límite estudia valores en un entorno perforado de $a$.
+cuando los valores $f(x)$ pueden hacerse tan próximos a $L$ como se desee al tomar $x$ suficientemente próximo a $a$, con $x\neq a$. El límite estudia valores en un entorno alrededor de $a$ del que se excluye el propio punto $a$.
 \end{definicion}
 
 \begin{nota}
@@ -719,12 +715,10 @@ y la evidencia sugiere $\lim_{x\to1}f(x)=2$, aunque $f(1)$ no está definida.
   \draw[Gris!70] (0,-0.3)--(0,3.4) node[above] {$y$};
   \draw[Azul,very thick,domain=-0.1:2.8,samples=2] plot (\x,{\x+1});
   \draw[fill=white,draw=Rojo,thick] (1,2) circle (2.2pt);
-  \fill[Rojo] (1,3) circle (1.8pt);
-  \draw[Gris,dashed] (1,0)--(1,3);
-  \node[below] at (1,0) {$a$};
-  \node[left] at (0,2) {$L$};
+  \draw[Gris,dashed] (1,0)--(1,2);
+  \node[below] at (1,0) {$1$};
+  \node[left] at (0,2) {$2$};
   \node[right] at (1,2) {valor al que se aproxima};
-  \node[right] at (1,3) {$f(a)$};
 \end{tikzpicture}
 \end{center}
 
@@ -733,17 +727,25 @@ El \textbf{límite por la izquierda}, $\lim_{x\to a^-}f(x)$, utiliza valores $x<
 \end{definicion}
 
 \begin{teorema}[criterio de los límites laterales]
-El límite bilateral existe y vale $L$ si y solo si existen los dos límites laterales y coinciden:
+El límite existe y vale $L$ si y solo si existen los dos límites laterales y coinciden:
 \[
 \lim_{x\to a}f(x)=L
 \iff
 \lim_{x\to a^-}f(x)=L=\lim_{x\to a^+}f(x).
 \]
-Si los límites laterales son distintos, el límite bilateral no existe.
+Si los límites laterales son distintos, el límite no existe.
 \end{teorema}
 
 \begin{ejemplo}[salto]
-Sea $s(x)=-1$ para $x<0$ y $s(x)=2$ para $x\geq0$. Determine sus límites laterales y decida si existe $\lim_{x\to0}s(x)$.
+Considere la función $s:\mathbb{R}\to\mathbb{R}$ definida por
+\[
+s(x)=
+\begin{cases}
+  -1, & x<0,\\
+  2, & x\geq0.
+\end{cases}
+\]
+Determine los límites laterales de $s$ cuando $x$ se aproxima a $0$ y decida si existe $\lim_{x\to0}s(x)$.
 \end{ejemplo}
 \ifmostrarSoluciones
 \begin{solucion}
@@ -755,68 +757,18 @@ Como son distintos, $\lim_{x\to0}s(x)$ no existe, aunque $s(0)=2$ sí está defi
 \end{solucion}
 \else\vspace{13mm}\fi
 
-\section*{Interpretación mediante sucesiones}
-
-\begin{proposicion}[criterio secuencial intuitivo]
-La afirmación $\lim_{x\to a}f(x)=L$ exige que, para toda sucesión $(x_n)$ del dominio tal que
-\[
-x_n\neq a\quad\text{y}\quad x_n\to a,
-\]
-se tenga $f(x_n)\to L$. Para refutar la existencia del límite basta encontrar dos sucesiones que se aproximen a $a$ y cuyas imágenes tengan límites diferentes.
-\end{proposicion}
-
-\begin{ejemplo}[dos caminos hacia el mismo punto]
-Use $x_n=1/n$ y $y_n=-1/n$ para estudiar el límite en $0$ de la función signo, definida como $1$ para entradas positivas y $-1$ para entradas negativas.
-\end{ejemplo}
-\ifmostrarSoluciones
-\begin{solucion}
-Ambas sucesiones tienden a $0$, pero $\operatorname{sgn}(x_n)=1$ y $\operatorname{sgn}(y_n)=-1$ para todo $n$. Las imágenes tienen límites distintos; por tanto, el límite en $0$ no existe.
-\end{solucion}
-\else\vspace{13mm}\fi
-
-\section*{Unicidad y comportamiento local}
+\section*{Unicidad y valor de la función en el punto}
 
 \begin{teorema}[unicidad del límite]
 Si $\lim_{x\to a}f(x)$ existe, su valor es único. En consecuencia, una misma función no puede aproximarse simultáneamente a dos números distintos cuando $x\to a$.
 \end{teorema}
-
-\begin{definicion}[funciones localmente iguales]
-Las funciones $f$ y $g$ son \textbf{localmente iguales alrededor de $a$} si existe un intervalo abierto $I$ que contiene a $a$ tal que
-\[
-f(x)=g(x)\qquad\text{para todo }x\in I\setminus\{a\}.
-\]
-Pueden diferir en $a$ o fuera de ese intervalo.
-\end{definicion}
-
-\begin{proposicion}[principio de sustitución local]
-Si $f$ y $g$ son localmente iguales alrededor de $a$, entonces
-\[
-\lim_{x\to a}f(x)=L\iff\lim_{x\to a}g(x)=L.
-\]
-El límite depende del comportamiento próximo al punto, no del valor asignado exactamente en él ni de lo que ocurra lejos de él.
-\end{proposicion}
-
-\begin{ejemplo}[cambio en un solo punto]
-Considere $g(x)=x+1$ y defina $f(x)=x+1$ cuando $x\neq1$, pero $f(1)=7$. Compare $f(1)$, $g(1)$ y los límites de ambas funciones cuando $x\to1$.
-\end{ejemplo}
-\ifmostrarSoluciones
-\begin{solucion}
-$f(1)=7$ y $g(1)=2$, pero las funciones coinciden para todo $x\neq1$. Por el principio de sustitución local,
-\[
-\lim_{x\to1}f(x)=\lim_{x\to1}g(x)=2.
-\]
-\end{solucion}
-\else\vspace{12mm}\fi
 
 \begin{ejercicios}[noción intuitiva de límite]
 \begin{enumerate}
   \item Construya una tabla para estimar $\lim_{x\to2}(x^2+1)$.
   \item Estime $\lim_{x\to3}\dfrac{x^2-9}{x-3}$ con tres valores a cada lado de $3$.
   \item Dibuje una función con $f(2)=4$ y $\lim_{x\to2}f(x)=1$.
-  \item Decida si existe el límite en $0$ de $f(x)=|x|/x$.
-  \item Use dos sucesiones para justificar su respuesta en el ejercicio anterior.
-  \item Proponga dos funciones localmente iguales alrededor de $2$ que tengan valores diferentes en $2$.
-  \item ¿Puede una función tener límite $3$ y límite $5$ en el mismo punto? Justifique.
+  \item Explique si existe el límite en $0$ de $f(x)=|x|/x$.
 \end{enumerate}
 \end{ejercicios}
 
@@ -827,9 +779,6 @@ $f(1)=7$ y $g(1)=2$, pero las funciones coinciden para todo $x\neq1$. Por el pri
   \item Para $x\neq3$, el cociente es $x+3$; la tabla se aproxima a $6$.
   \item Por ejemplo, $f(x)=1$ si $x\neq2$ y $f(2)=4$.
   \item No existe: los límites laterales son $-1$ y $1$.
-  \item Con $x_n=1/n$ y $y_n=-1/n$, las imágenes son $1$ y $-1$, respectivamente.
-  \item Por ejemplo, $f(x)=x^2$ y $g(x)=x^2$ para $x\neq2$, con $g(2)=0$.
-  \item No, por la unicidad del límite.
 \end{enumerate}
 \end{solucion}
 \fi
@@ -842,7 +791,7 @@ Sean $a,c\in\mathbb{R}$ y $n\in\mathbb{N}^{*}$. Entonces
 \lim_{x\to a}x=a,\qquad
 \lim_{x\to a}x^n=a^n.
 \]
-Cuando la raíz está definida en un entorno adecuado de $a$,
+Cuando $a>0$,
 \[
 \lim_{x\to a}\sqrt[n]{x}=\sqrt[n]{a}.
 \]
@@ -861,7 +810,14 @@ Si $M\neq0$, también
 \[
 \lim_{x\to a}\frac{f(x)}{g(x)}=\frac{L}{M}.
 \]
-Además, las potencias enteras positivas y las raíces compatibles con su dominio pueden trasladarse al límite.
+Además, si $n\in\mathbb{N}^{*}$, entonces
+\[
+\lim_{x\to a}\bigl(f(x)\bigr)^n=L^n.
+\]
+Si $m\in\mathbb{N}^{*}$ y la expresión radical está definida para los valores de $x$ cercanos a $a$, entonces
+\[
+\lim_{x\to a}\sqrt[m]{f(x)}=\sqrt[m]{L}.
+\]
 \end{teorema}
 
 \begin{nota}
